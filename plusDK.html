@@ -4,520 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Đăng Ký Tài Khoản | Nền tảng Học tập</title>
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
 
-  <style>
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    /* ─── Bảng màu Korean Vintage Education ─── */
-    :root {
-      --bg: #f2efe9;             
-      --surface: #ffffff;        
-      --surface-2: #f8f6f0;      
-      --border: #e2ddd3;         
-      --border-focus: #bcaaa4;   
-      --accent: #9c7c64;         
-      --accent-glow: rgba(156, 124, 100, 0.2);
-      --accent-hover: #836753;
-      --success: #829a7c;        
-      --error: #c87a7a;          
-      --text-1: #3e3a37;         
-      --text-2: #7a7269;         
-      --text-3: #b0a89f;         
-      --radius: 16px;
-      --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    html, body { 
-      height: 100vh; 
-      overflow: hidden; 
-    }
-
-    body {
-      font-family: 'Be Vietnam Pro', sans-serif;
-      background-color: var(--bg);
-      background-image: radial-gradient(var(--border) 1px, transparent 1px);
-      background-size: 32px 32px; 
-      color: var(--text-1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px; 
-    }
-
-    /* ─── Khung Layout chính ─── */
-    .card-wrapper {
-      display: flex;
-      flex-direction: row; 
-      width: 100%;
-      max-width: 1040px; 
-      max-height: 100%; 
-      background: var(--surface);
-      border-radius: 24px;
-      box-shadow: 
-        0 30px 60px -12px rgba(100, 80, 60, 0.25), 
-        0 4px 24px rgba(100, 80, 60, 0.08),        
-        0 0 0 1px rgba(255, 255, 255, 0.8) inset;  
-      overflow: hidden;
-      animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
-    }
-
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ─── Cột Trái: Ảnh minh họa ─── */
-    .image-section {
-      flex: 1.2; 
-      background-color: #e8e3d9;
-      background-image: url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'); 
-      background-size: cover;
-      background-position: center;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: 56px 48px; 
-    }
-
-    .image-section::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to bottom, transparent 20%, rgba(62, 58, 55, 0.85) 100%);
-    }
-
-    .image-text {
-      position: relative;
-      z-index: 2;
-      color: #fff;
-    }
-
-    .image-text h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 38px; 
-      font-weight: 600;
-      margin-bottom: 16px;
-      line-height: 1.25;
-    }
-
-    .image-text p {
-      font-size: 16px; 
-      line-height: 1.6;
-      opacity: 0.95;
-      font-weight: 300;
-    }
-
-    /* ─── Cột Phải: Khu vực Form ─── */
-    .form-section {
-      flex: 1;
-      padding: 40px 56px; 
-      max-width: 520px; 
-      background: var(--surface);
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start; 
-      overflow-y: auto; 
-    }
-
-    .form-inner-wrapper {
-      margin: auto 0; 
-      width: 100%;
-    }
-
-    .card-header { margin-bottom: 16px; } 
-
-    .logo {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 48px; height: 48px; 
-      background: var(--surface-2);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      margin-bottom: 16px;
-    }
-
-    .logo svg { width: 22px; height: 22px; color: var(--accent); }
-
-    .card-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 28px; 
-      color: var(--text-1);
-      margin-bottom: 6px;
-      line-height: 1.4; 
-    }
-
-    .card-subtitle {
-      font-size: 15px; 
-      color: var(--text-2);
-      font-weight: 400;
-    }
-
-    /* ─── Tabs ─── */
-    .tabs {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      background: var(--surface-2);
-      border-radius: 14px;
-      padding: 6px;
-      margin-bottom: 16px;
-      gap: 6px;
-    }
-
-    .tab-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 10px; 
-      border: none;
-      background: transparent;
-      color: var(--text-2);
-      font-family: inherit;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      border-radius: 10px;
-      transition: var(--transition);
-    }
-
-    .tab-btn svg { width: 16px; height: 16px; flex-shrink: 0; }
-
-    .tab-btn.active {
-      background: var(--surface);
-      color: var(--accent);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-    }
-
-    .tab-panel { display: none; }
-    .tab-panel.active { display: block; animation: fadeIn 0.3s ease; }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateX(8px); }
-      to   { opacity: 1; transform: translateX(0); }
-    }
-
-    /* ─── Ô nhập liệu (Input Field) ─── */
-    /* THU HẸP: Xóa sạch margin-bottom của field, để ô báo lỗi làm nhiệm vụ tạo khoảng cách */
-    .field { margin-bottom: 0px; } 
-
-    .field-label {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 13px; 
-      font-weight: 600;
-      color: var(--text-2);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 6px; 
-    }
-
-    .field-label svg { width: 14px; height: 14px; }
-
-    .input-wrap { position: relative; }
-
-    .input-wrap input {
-      width: 100%;
-      padding: 12px 16px 12px 44px; 
-      background: var(--surface-2);
-      border: 1.5px solid var(--border);
-      border-radius: 12px;
-      color: var(--text-1);
-      font-family: inherit;
-      font-size: 15px; 
-      transition: var(--transition);
-      outline: none;
-    }
-
-    .input-wrap input[type="number"]::-webkit-inner-spin-button,
-    .input-wrap input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
-
-    .input-wrap input::placeholder { color: var(--text-3); font-weight: 400; font-size: 14.5px; }
-
-    .input-wrap input:focus {
-      border-color: var(--border-focus);
-      background: #ffffff;
-      box-shadow: 0 0 0 4px var(--accent-glow);
-    }
-
-    .input-wrap input.error {
-      border-color: var(--error);
-      background: #fff8f8;
-    }
-
-    .input-icon {
-      position: absolute;
-      left: 16px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--text-3);
-      pointer-events: none;
-      transition: color var(--transition);
-      width: 18px; height: 18px;
-    }
-
-    .input-wrap input:focus ~ .input-icon { color: var(--accent); }
-
-    .toggle-pw {
-      position: absolute;
-      right: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      background: none;
-      border: none;
-      color: var(--text-3);
-      cursor: pointer;
-      padding: 4px;
-      display: flex;
-      align-items: center;
-      transition: color var(--transition);
-    }
-
-    .toggle-pw:hover { color: var(--accent); }
-    .toggle-pw svg { width: 18px; height: 18px; }
-
-    /* ─── Lỗi báo đỏ ─── */
-    .field-error {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 11.5px; 
-      color: var(--error);
-      margin-top: 4px; /* Giảm nhẹ đỉnh */
-      min-height: 14px; /* THU HẸP: Ép độ cao không gian báo lỗi mỏng lại */
-      margin-bottom: 2px; /* Khoảng cách nhỏ với label của dòng tiếp theo */
-      opacity: 0;
-      transform: translateY(-4px);
-      transition: var(--transition);
-    }
-
-    .field-error.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .field-error svg { width: 13px; height: 13px; flex-shrink: 0; }
-
-    /* ─── Cột SĐT ─── */
-    .phone-row {
-      display: grid;
-      grid-template-columns: 100px 1fr; 
-      gap: 10px;
-    }
-
-    .country-select {
-      padding: 12px 8px; 
-      background: var(--surface-2);
-      border: 1.5px solid var(--border);
-      border-radius: 12px;
-      color: var(--text-1);
-      font-family: inherit;
-      font-size: 14.5px;
-      cursor: pointer;
-      outline: none;
-      transition: var(--transition);
-      appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238892a4' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 10px center;
-      padding-right: 28px;
-    }
-
-    .country-select:focus {
-      border-color: var(--border-focus);
-      background: #ffffff;
-      box-shadow: 0 0 0 4px var(--accent-glow);
-    }
-
-    /* ─── Độ mạnh mật khẩu ─── */
-    .strength-bar {
-      display: flex;
-      gap: 6px;
-      margin-top: 6px;
-    }
-
-    .strength-seg {
-      height: 4px; 
-      flex: 1;
-      background: var(--border);
-      border-radius: 99px;
-      transition: background 0.3s ease;
-    }
-
-    .strength-seg.weak   { background: var(--error); }
-    .strength-seg.medium { background: #d4a373; }
-    .strength-seg.strong { background: var(--success); }
-
-    .strength-label {
-      font-size: 11px;
-      color: var(--text-3);
-      margin-top: 4px;
-      transition: color 0.3s;
-      font-weight: 500;
-    }
-
-    /* ─── Điều khoản ─── */
-    .terms {
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      margin-top: 4px;
-      margin-bottom: 16px; 
-    }
-
-    .terms input[type="checkbox"] {
-      width: 16px; height: 16px;
-      accent-color: var(--accent);
-      margin-top: 2px;
-      flex-shrink: 0;
-      cursor: pointer;
-    }
-
-    .terms label {
-      font-size: 13.5px; 
-      color: var(--text-2);
-      cursor: pointer;
-      line-height: 1.5;
-    }
-
-    .terms a { color: var(--accent); text-decoration: none; font-weight: 500;}
-    .terms a:hover { text-decoration: underline; }
-
-    /* ─── Nút Đăng Ký ─── */
-    .btn-submit {
-      width: 100%;
-      padding: 14px; 
-      background: var(--accent);
-      color: white;
-      border: none;
-      border-radius: 12px;
-      font-family: inherit;
-      font-size: 15.5px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      cursor: pointer;
-      position: relative;
-      transition: var(--transition);
-      margin-top: 4px;
-      box-shadow: 0 4px 14px var(--accent-glow);
-    }
-
-    .btn-submit:hover {
-      background: var(--accent-hover);
-      box-shadow: 0 6px 20px var(--accent-glow);
-      transform: translateY(-1px);
-    }
-
-    .btn-submit:active { transform: translateY(0); }
-
-    .btn-submit.loading {
-      pointer-events: none;
-      opacity: 0.8;
-      color: transparent; 
-    }
-
-    .btn-submit .spinner {
-      display: none;
-      width: 20px; height: 20px;
-      border: 2.5px solid rgba(255,255,255,0.3);
-      border-top-color: white;
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      margin-left: -10px;
-      margin-top: -10px;
-    }
-
-    .btn-submit.loading .spinner { display: block; }
-
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    /* ─── Nút Đăng nhập ─── */
-    .login-hint {
-      text-align: center;
-      margin-top: 20px;
-      font-size: 14.5px;
-      color: var(--text-2);
-    }
-
-    .login-hint a {
-      color: var(--accent);
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    .login-hint a:hover { text-decoration: underline; }
-
-    /* ─── Màn hình thành công ─── */
-    .success-screen {
-      display: none;
-      text-align: center;
-      padding: 40px 0;
-      animation: fadeIn 0.4s ease;
-    }
-
-    .success-screen.show { display: block; }
-
-    .success-icon {
-      width: 72px; height: 72px;
-      background: #eef5ed; 
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 20px;
-    }
-
-    .success-icon svg { width: 36px; height: 36px; color: var(--success); }
-
-    .success-screen h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 28px;
-      font-weight: 700;
-      margin-bottom: 12px;
-      color: var(--text-1);
-    }
-
-    .success-screen p { font-size: 15px; line-height: 1.6; color: var(--text-2); }
-
-    /* ─── Responsive: Điện thoại xếp dọc ─── */
-    @media (max-width: 860px) {
-      body { height: auto; overflow: auto; padding: 16px; } 
-      .card-wrapper {
-        flex-direction: column; 
-        max-width: 520px;
-        max-height: none;
-      }
-      .image-section {
-        min-height: 240px;
-        padding: 32px 24px;
-      }
-      .image-text h2 { font-size: 28px; }
-      .form-section { padding: 32px 24px; overflow-y: visible; }
-    }
-    
-    @media (max-width: 400px) {
-      .phone-row { grid-template-columns: 85px 1fr; }
-      .form-section { padding: 24px 16px; }
-    }
-  </style>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
 </head>
 <body>
 
 <div class="card-wrapper">
   
-  <div class="image-section">
+  <div class="image-section" style="background-image: url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?q=80&w=1000&auto=format&fit=crop');">
     <div class="image-text">
       <h2>Hành trình tri thức</h2>
       <p>Khám phá kho tàng kiến thức vô tận trong không gian học tập tối giản và tinh tế.</p>
@@ -528,11 +28,6 @@
     <div class="form-inner-wrapper">
       
       <div class="card-header">
-        <div class="logo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/>
-          </svg>
-        </div>
         <h1 class="card-title">Tạo tài khoản</h1>
         <p class="card-subtitle">Chọn phương thức đăng ký của bạn</p>
       </div>
@@ -555,7 +50,6 @@
       </div>
 
       <div id="main-form">
-
         <div class="tab-panel active" id="panel-email" role="tabpanel">
           <div class="field">
             <div class="field-label">
@@ -566,7 +60,7 @@
               <input type="text" id="e-name" placeholder="Ví dụ: Nguyễn Văn A" autocomplete="name">
               <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
             </div>
-            <div class="field-error" id="err-e-name"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span></span></div>
+            <div class="field-error" id="err-e-name"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Vui lòng nhập họ và tên.</span></div>
           </div>
 
           <div class="field">
@@ -578,7 +72,7 @@
               <input type="email" id="e-email" placeholder="example@gmail.com" autocomplete="email">
               <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
             </div>
-            <div class="field-error" id="err-e-email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span></span></div>
+            <div class="field-error" id="err-e-email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Vui lòng nhập email hợp lệ.</span></div>
           </div>
 
           <div class="field">
@@ -600,7 +94,7 @@
               <div class="strength-seg" id="seg4"></div>
             </div>
             <div class="strength-label" id="strength-label"></div>
-            <div class="field-error" id="err-e-pw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span></span></div>
+            <div class="field-error" id="err-e-pw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Mật khẩu phải từ 8 ký tự.</span></div>
           </div>
 
           <div class="field">
@@ -615,7 +109,7 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
               </button>
             </div>
-            <div class="field-error" id="err-e-pw2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span></span></div>
+            <div class="field-error" id="err-e-pw2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Mật khẩu xác nhận chưa khớp.</span></div>
           </div>
 
           <div class="terms">
@@ -639,7 +133,7 @@
               <input type="text" id="p-name" placeholder="Ví dụ: Nguyễn Văn A" autocomplete="name">
               <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
             </div>
-            <div class="field-error" id="err-p-name"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span></span></div>
+            <div class="field-error" id="err-p-name"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Vui lòng nhập họ và tên.</span></div>
           </div>
 
           <div class="field">
@@ -660,7 +154,7 @@
                 <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
               </div>
             </div>
-            <div class="field-error" id="err-p-phone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span></span></div>
+            <div class="field-error" id="err-p-phone"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>SĐT không hợp lệ (Phải là SĐT VN 10 số).</span></div>
           </div>
 
           <div class="field">
@@ -682,7 +176,7 @@
               <div class="strength-seg" id="seg8"></div>
             </div>
             <div class="strength-label" id="strength-label-p"></div>
-            <div class="field-error" id="err-p-pw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span></span></div>
+            <div class="field-error" id="err-p-pw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Mật khẩu phải từ 8 ký tự.</span></div>
           </div>
 
           <div class="field">
@@ -697,7 +191,7 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
               </button>
             </div>
-            <div class="field-error" id="err-p-pw2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span></span></div>
+            <div class="field-error" id="err-p-pw2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Mật khẩu xác nhận chưa khớp.</span></div>
           </div>
 
           <div class="terms">
@@ -710,7 +204,6 @@
             <div class="spinner"></div>
           </button>
         </div>
-
       </div>
 
       <div class="success-screen" id="success-screen">
@@ -729,198 +222,6 @@
   </div>
 </div>
 
-<script>
-  // Tab switching 
-  document.querySelectorAll('.tab-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.tab-btn').forEach(b => {
-        b.classList.remove('active');
-        b.setAttribute('aria-selected', 'false');
-      });
-      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-      btn.classList.add('active');
-      btn.setAttribute('aria-selected', 'true');
-      document.getElementById('panel-' + btn.dataset.tab).classList.add('active');
-    });
-  });
-
-  // Enter chuyển ô tiếp theo
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') {
-      const activeEl = document.activeElement; 
-      if (activeEl.tagName === 'INPUT' && activeEl.type !== 'checkbox') {
-        e.preventDefault(); 
-        const activePanel = document.querySelector('.tab-panel.active');
-        const inputs = Array.from(activePanel.querySelectorAll('input:not([type="checkbox"])'));
-        const currentIndex = inputs.indexOf(activeEl);
-        if (currentIndex > -1 && currentIndex < inputs.length - 1) {
-          inputs[currentIndex + 1].focus();
-        } else if (currentIndex === inputs.length - 1) {
-          activePanel.querySelector('.btn-submit').focus();
-        }
-      }
-    }
-  });
-
-  // Toggle password
-  function togglePw(id, btn) {
-    const input = document.getElementById(id);
-    const isText = input.type === 'text';
-    input.type = isText ? 'password' : 'text';
-    btn.innerHTML = isText
-      ? `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`
-      : `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>`;
-  }
-
-  // Password strength
-  document.getElementById('e-pw').addEventListener('input', function() { updateStrength(this.value, 'email'); });
-  document.getElementById('p-pw').addEventListener('input', function() { updateStrength(this.value, 'phone'); });
-
-  function updateStrength(pw, mode) {
-    let score = 0;
-    if (pw.length >= 8) score++;
-    if (/[A-Z]/.test(pw)) score++;
-    if (/[0-9]/.test(pw)) score++;
-    if (/[^A-Za-z0-9]/.test(pw)) score++;
-
-    const segs = mode === 'email' ? ['seg1','seg2','seg3','seg4'] : ['seg5','seg6','seg7','seg8'];
-    const labels = ['','Yếu','Trung bình','Mạnh','Rất mạnh'];
-    const cls = ['','weak','medium','strong','strong'];
-    const colors = ['','#c87a7a','#d4a373','#829a7c','#829a7c'];
-
-    segs.forEach((id, i) => {
-      const el = document.getElementById(id);
-      if(el) {
-        el.className = 'strength-seg';
-        if (i < score) el.classList.add(cls[score]);
-      }
-    });
-
-    const lbl = document.getElementById(mode === 'email' ? 'strength-label' : 'strength-label-p');
-    if(lbl) {
-      lbl.textContent = pw.length ? labels[score] : '';
-      lbl.style.color = colors[score];
-    }
-  }
-
-  // Xử lý Lỗi
-  function showErr(id, msg) {
-    const el = document.getElementById(id);
-    if(!el) return;
-    el.querySelector('span').textContent = msg;
-    el.classList.add('visible');
-    el.previousElementSibling.querySelector('input, .phone-row')?.classList?.add('error');
-  }
-
-  function clearErr(id) {
-    const el = document.getElementById(id);
-    if (!el) return;
-    el.classList.remove('visible');
-    el.previousElementSibling.querySelector('input, .phone-row')?.classList?.remove('error');
-  }
-
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  const phoneRegex = /^(0|84)(3|5|7|8|9)[0-9]{8}$/;
-
-  function checkField(id) {
-    const el = document.getElementById(id);
-    if (!el) return true;
-    const val = el.value.trim();
-    clearErr('err-' + id);
-    let isValid = true;
-
-    switch(id) {
-      case 'e-name':
-      case 'p-name':
-        if (!val) { showErr('err-' + id, 'Vui lòng nhập họ và tên.'); isValid = false; }
-        break;
-      case 'e-email':
-        if (!val) { 
-          showErr('err-e-email', 'Vui lòng nhập email.'); isValid = false; 
-        } else if (!emailRegex.test(val)) { 
-          showErr('err-e-email', 'Định dạng email không hợp lệ (VD: ten@gmail.com).'); isValid = false; 
-        } else {
-          const domain = val.split('@')[1].toLowerCase();
-          const commonTypos = { 'gamil.com':'gmail.com', 'gmai.com':'gmail.com', 'gmal.com':'gmail.com', 'gmail.con':'gmail.com', 'gmail.com.vn':'gmail.com', 'yaho.com':'yahoo.com', 'yahoo.com.vn':'yahoo.com' };
-          if (commonTypos[domain]) { showErr('err-e-email', `Tên miền sai. Ý bạn là @${commonTypos[domain]} phải không?`); isValid = false; }
-        }
-        break;
-      case 'p-phone':
-        const cleanPhone = val.replace(/\s+/g, '');
-        if (!cleanPhone) { showErr('err-p-phone', 'Vui lòng nhập số điện thoại.'); isValid = false; }
-        else if (!phoneRegex.test(cleanPhone)) { showErr('err-p-phone', 'SĐT không hợp lệ (Phải là SĐT Việt Nam 10 số).'); isValid = false; }
-        break;
-      case 'e-pw':
-      case 'p-pw':
-        const pw = el.value; 
-        if (!pw) { showErr('err-' + id, 'Vui lòng nhập mật khẩu.'); isValid = false; }
-        else if (pw.length < 8) { showErr('err-' + id, 'Mật khẩu phải từ 8 ký tự trở lên.'); isValid = false; }
-        const pw2Id = id === 'e-pw' ? 'e-pw2' : 'p-pw2';
-        if (document.getElementById(pw2Id) && document.getElementById(pw2Id).value) checkField(pw2Id);
-        break;
-      case 'e-pw2':
-      case 'p-pw2':
-        const pw2 = el.value;
-        const mainPw = document.getElementById(id === 'e-pw2' ? 'e-pw' : 'p-pw').value;
-        if (!pw2) { showErr('err-' + id, 'Vui lòng xác nhận lại mật khẩu.'); isValid = false; }
-        else if (pw2 !== mainPw) { showErr('err-' + id, 'Mật khẩu xác nhận chưa khớp.'); isValid = false; }
-        break;
-    }
-    return isValid;
-  }
-
-  ['e-name','e-email','e-pw','e-pw2','p-name','p-phone','p-pw','p-pw2'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.addEventListener('input', () => clearErr('err-' + id));
-      el.addEventListener('blur', () => checkField(id));
-    }
-  });
-
-  function validateEmail() {
-    const isNameValid = checkField('e-name');
-    const isEmailValid = checkField('e-email');
-    const isPwValid = checkField('e-pw');
-    const isPw2Valid = checkField('e-pw2');
-    const terms = document.getElementById('e-terms').checked;
-    if (!terms) { alert('Vui lòng đồng ý với Điều khoản dịch vụ và Chính sách bảo mật.'); return false; }
-    return isNameValid && isEmailValid && isPwValid && isPw2Valid;
-  }
-
-  function submitEmail() {
-    if (!validateEmail()) return;
-    const btn = document.getElementById('btn-email');
-    btn.classList.add('loading');
-    setTimeout(() => showSuccess('email'), 1500); 
-  }
-
-  function validatePhone() {
-    const isNameValid = checkField('p-name');
-    const isPhoneValid = checkField('p-phone');
-    const isPwValid = checkField('p-pw');
-    const isPw2Valid = checkField('p-pw2');
-    const terms = document.getElementById('p-terms').checked;
-    if (!terms) { alert('Vui lòng đồng ý với Điều khoản dịch vụ và Chính sách bảo mật.'); return false; }
-    return isNameValid && isPhoneValid && isPwValid && isPw2Valid;
-  }
-
-  function submitPhone() {
-    if (!validatePhone()) return;
-    const btn = document.getElementById('btn-phone');
-    btn.classList.add('loading');
-    setTimeout(() => showSuccess('phone'), 1500); 
-  }
-
-  function showSuccess(mode) {
-    document.getElementById('main-form').style.display = 'none';
-    document.querySelector('.tabs').style.display = 'none';
-    document.querySelector('.form-inner-wrapper .card-header').style.display = 'none';
-    const s = document.getElementById('success-screen');
-    s.classList.add('show');
-    document.getElementById('success-msg').textContent = mode === 'email'
-      ? 'Vui lòng kiểm tra hộp thư email của bạn để xác nhận tài khoản.'
-      : 'Mã OTP xác nhận đã được gửi tới số điện thoại của bạn qua SMS.';
-  }
-</script>
+<script src="js/main.js"></script>
 </body>
 </html>

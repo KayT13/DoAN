@@ -1,0 +1,41 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg: #f2efe9;             
+  --surface: #ffffff;        
+  --surface-2: #f8f6f0;      
+  --border: #e2ddd3;         
+  --border-focus: #bcaaa4;   
+  --accent: #9c7c64;         
+  --accent-glow: rgba(156, 124, 100, 0.2);
+  --accent-hover: #836753;
+  --success: #829a7c;        
+  --error: #c87a7a;          
+  --text-1: #3e3a37;         
+  --text-2: #7a7269;         
+  --text-3: #b0a89f;         
+  --radius: 16px;
+  --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html, body { 
+  height: 100vh; 
+  overflow: hidden; 
+}
+
+body {
+  font-family: 'Be Vietnam Pro', sans-serif;
+  background-color: var(--bg);
+  background-image: radial-gradient(var(--border) 1px, transparent 1px);
+  background-size: 32px 32px; 
+  color: var(--text-1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px; 
+  position: relative; 
+}
