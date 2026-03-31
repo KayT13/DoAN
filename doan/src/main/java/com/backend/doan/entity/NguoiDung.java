@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -24,40 +26,34 @@ public class NguoiDung {
     @Column(name = "maNguoiDung")
     private Integer maNguoiDung;
 
-    @Column(name = "tenDangNhap", unique = true, length = 50)
+    @Column(unique = true, length = 50)
     private String tenDangNhap;
 
-    @Column(name = "matKhau", nullable = false, length = 255)
+    @Column(nullable = false, length = 255)
     private String matKhau;
 
-    @Column(name = "email", length = 100)
     private String email;
-
-    @Column(name = "soDienThoai", length = 15)
     private String soDienThoai;
-
-    @Column(name = "hoTen", length = 100)
     private String hoTen;
-
-    @Column(name = "ngaySinh")
     private LocalDate ngaySinh;
-
-    @Column(name = "gioiTinh", length = 10)
     private String gioiTinh;
-
-    @Column(name = "trangThai", length = 20)
     private String trangThai;
 
-    @Column(name = "ngayTao", insertable = false, updatable = false)
+    @CreationTimestamp // Tự động lấy thời gian hệ thống khi tạo mới
+    @Column(name = "ngayTao", updatable = false)
     private LocalDateTime ngayTao;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "NguoiDung_VaiTro",
-            joinColumns = @JoinColumn(name = "maNguoiDung"),
-            inverseJoinColumns = @JoinColumn(name = "maVaiTro")
+        name = "NguoiDung_VaiTro", // Khớp với SQL 
+        joinColumns = @JoinColumn(name = "maNguoiDung"),
+        inverseJoinColumns = @JoinColumn(name = "maVaiTro")
     )
     private Set<VaiTro> vaiTros;
+
+
+
+   
 
     public NguoiDung() {
     }

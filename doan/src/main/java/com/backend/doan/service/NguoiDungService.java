@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.backend.doan.entity.NguoiDung;
 import com.backend.doan.repository.NguoiDungRepository;
@@ -15,41 +17,53 @@ public class NguoiDungService {
     @Autowired
     private NguoiDungRepository nguoiDungRepository;
 
-    // Lấy danh sách tất cả người dùng
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public List<NguoiDung> layTatCa() {
         return nguoiDungRepository.findAll();
     }
 
-    // Tìm người dùng theo ID (maNguoiDung)
     public Optional<NguoiDung> timTheoId(Integer id) {
         return nguoiDungRepository.findById(id);
     }
 
-    // Tìm người dùng theo tên đăng nhập (dùng cho Đăng nhập)
-    public Optional<NguoiDung> timTheoTenDangNhap(String tenDangNhap) {
-        return nguoiDungRepository.findByTenDangNhap(tenDangNhap);
-    }
-
-    // Thêm mới hoặc Cập nhật thông tin người dùng
-    public NguoiDung luuNguoiDung(NguoiDung nguoiDung) {
-        // Nếu là thêm mới (chưa có ID), ta cần kiểm tra xem username hoặc email đã bị trùng chưa
-        if (nguoiDung.getMaNguoiDung() == null) {
-            if (nguoiDungRepository.existsByTenDangNhap(nguoiDung.getTenDangNhap())) {
-                throw new RuntimeException("Lỗi: Tên đăng nhập đã tồn tại!");
-            }
-            if (nguoiDungRepository.existsByEmail(nguoiDung.getEmail())) {
-                throw new RuntimeException("Lỗi: Email đã được sử dụng!");
-            }
-            
-         
+    @Transactional
+    public NguoiDung luuMoi(NguoiDung nguoiDung) {
+        // Kiểm tra trùng lặp trước khi tạo
+        if (nguoiDungRepository.existsByTenDangNhap(nguoiDung.getTenDangNhap())) {
+            throw new RuntimeException("Tên đăng nhập đã tồn tại!");
         }
-        
-        // Lưu vào CSDL
+        if (nguoiDungRepository.existsByEmail(nguoiDung.getEmail())) {
+            throw new RuntimeException("Email đã được sử dụng!");
+        }
+
+        // Mã hóa mật khẩu
+        nguoiDung.setMatKhau(passwordEncoder.encode(nguoiDung.getMatKhau()));
         return nguoiDungRepository.save(nguoiDung);
     }
 
-    // Xóa người dùng theo ID
-    public void xoaNguoiDung(Integer id) {
+    @Transactional
+    public NguoiDung capNhat(Integer id, NguoiDung duLieuMoi) {
+        return nguoiDungRepository.findById(id).map(user -> {
+            user.setHoTen(duLieuMoi.getHoTen());
+            user.setEmail(duLieuMoi.getEmail());
+            user.setSoDienThoai(duLieuMoi.getSoDienThoai());
+            
+            // Chỉ mã hóa lại mật khẩu nếu người dùng có nhập mật khẩu mới
+            if (duLieuMoi.getMatKhau() != null && !duLieuMoi.getMatKhau().isEmpty()) {
+                user.setMatKhau(passwordEncoder.encode(duLieuMoi.getMatKhau()));
+            }
+            
+            return nguoiDungRepository.save(user);
+        }).orElseThrow(() -> new RuntimeException("Không tìm thấy người dùng ID: " + id));
+    }
+
+    @Transactional
+    public void xoa(Integer id) {
+        if (!nguoiDungRepository.existsById(id)) {
+            throw new RuntimeException("Người dùng không tồn tại!");
+        }
         nguoiDungRepository.deleteById(id);
     }
 }
