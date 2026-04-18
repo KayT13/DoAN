@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Chinh phục tiếng Hàn — Nền tảng học 6 kỹ năng cốt lõi</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Caveat:wght@600&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<style>
+        :root {
+            --navy-dark: #0F172A;
+            --navy-rich: #1E293B;
+            --accent-primary: #3B82F6;
+            --accent-secondary: #8B5CF6;
+            --accent-vibrant: #F43F5E;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --ink: #0F172A;
+            --ink-light: #64748B;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8FAFC;
+            color: var(--ink);
+            background-image: 
+                radial-gradient(at 0% 0%, hsla(217,100%,97%,1) 0, transparent 50%), 
+                radial-gradient(at 50% 0%, hsla(225,100%,98%,1) 0, transparent 50%),
+                radial-gradient(at 100% 0%, hsla(217,100%,97%,1) 0, transparent 50%);
+        }
+
+        .premium-gradient-btn {
+            background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy-rich) 100%);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .premium-gradient-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            filter: brightness(1.1);
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08);
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .annotation-badge {
+            font-family: 'Caveat', cursive;
+            background: #EDE9FE;
+            color: #6D28D9;
+            padding: 4px 12px;
+            border-radius: 99px;
+            font-size: 16px;
+            position: absolute;
+            z-index: 20;
+            opacity: 0;
+            transform: scale(0.9) translateY(10px);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            pointer-events: none;
+            box-shadow: 0 4px 12px rgba(109, 40, 217, 0.1);
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .annotation-badge.visible {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+
+        .annotation-badge svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+        }
+
+        .custom-switch input:checked ~ .switch-track {
+            background-color: var(--accent-primary);
+        }
+
+        .custom-switch input:checked ~ .switch-thumb {
+            transform: translateX(18px);
+        }
+
+        .hero-title em {
+            font-style: normal;
+            background: linear-gradient(135deg, #3B82F6 0%, #8B5CF6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+<nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
+<div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="text-lg font-bold tracking-tight text-slate-900">Tiếng Hàn</span>
+<span class="text-[10px] uppercase tracking-widest bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full font-semibold border border-slate-200">한국어</span>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors" href="#">Kỹ năng</a>
+<a class="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors" href="#">Lộ trình</a>
+<a class="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors" href="#">Tài nguyên</a>
+<a class="premium-gradient-btn text-white px-5 py-2 rounded-full text-sm font-semibold" href="#">Bắt đầu miễn phí</a>
+</div>
+</div>
+</nav>
+<main class="max-w-6xl mx-auto px-6 py-16 md:py-24">
+<section class="mb-24">
+<div class="max-w-3xl">
+<div class="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold mb-6 border border-blue-100">
+<span class="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse"></span>
+                Lộ trình cá nhân hoá · TOPIK I &amp; II
+            </div>
+<h1 class="hero-title text-5xl md:text-7xl font-bold tracking-tight text-slate-900 mb-6 leading-[1.1]">
+                Chinh phục<br/><em>Tiếng Hàn</em><br/>toàn diện
+            </h1>
+<p class="text-lg text-slate-600 max-w-lg mb-10 leading-relaxed">
+                Hệ thống 6 kỹ năng cốt lõi kết hợp công nghệ AI được thiết kế để bạn bứt phá trình độ nhanh và bền vững nhất.
+            </p>
+<div class="flex gap-10">
+<div>
+<div class="text-3xl font-bold text-slate-900 mb-1">3 000+</div>
+<div class="text-[11px] uppercase tracking-widest text-slate-400 font-bold">Từ vựng</div>
+</div>
+<div>
+<div class="text-3xl font-bold text-slate-900 mb-1">6</div>
+<div class="text-[11px] uppercase tracking-widest text-slate-400 font-bold">Kỹ năng vàng</div>
+</div>
+</div>
+</div>
+</section>
+<section class="mb-32">
+<div class="flex items-center justify-between mb-12">
+<div class="flex items-center gap-6">
+<h2 class="text-2xl font-bold text-slate-900 whitespace-nowrap">6 kỹ năng cốt lõi</h2>
+<div class="flex items-center gap-3 bg-white border border-slate-200 px-3 py-1.5 rounded-full shadow-sm">
+<span class="text-[11px] font-bold text-slate-500 uppercase tracking-tight" id="toggleTxt">Chế độ chuyên sâu</span>
+<label class="custom-switch relative inline-block w-11 h-6 cursor-pointer">
+<input class="sr-only" id="proToggle" type="checkbox"/>
+<div class="switch-track absolute inset-0 bg-slate-200 rounded-full transition-colors duration-300"></div>
+<div class="switch-thumb absolute top-1 left-1 bg-white w-4 h-4 rounded-full shadow-sm transition-transform duration-300"></div>
+</label>
+</div>
+</div>
+<div class="h-px flex-1 bg-slate-200 mx-8 hidden md:block"></div>
+<p class="text-sm text-slate-500 font-medium whitespace-nowrap">Lộ trình 180 ngày</p>
+</div>
+<div class="relative mb-12">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="grid">
+<!-- Cards injected by JS -->
+</div>
+<!-- Annotations Overlay -->
+<div class="annotation-badge" id="anno-nghe" style="top: -20px; left: 10px;">
+<svg fill="none" viewbox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+                Luyện nghe Premium
+            </div>
+<div class="annotation-badge" id="anno-noi" style="top: -20px; right: 10px;">
+<svg fill="none" viewbox="0 0 24 24"><path d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+                Speaking 1-1
+            </div>
+<div class="annotation-badge" id="anno-doc" style="top: 35%; left: -40px;">
+                Reading Intensive
+            </div>
+<div class="annotation-badge" id="anno-viet" style="top: 35%; right: -40px;">
+                Writing Correction
+            </div>
+<div class="annotation-badge" id="anno-tuvung" style="bottom: -20px; left: 20%;">
+                Hack não 3000 từ
+            </div>
+<div class="annotation-badge" id="anno-nguphap" style="bottom: -20px; right: 20%;">
+                Ngữ pháp Master
+            </div>
+</div>
+</section>
+<!-- Social Proof Section -->
+<section class="py-16 border-y border-slate-200 mb-24 overflow-hidden">
+<div class="text-center mb-12">
+<h3 class="text-sm font-bold uppercase tracking-[0.2em] text-slate-400 mb-4">Gia nhập cộng đồng</h3>
+<p class="text-3xl font-bold text-slate-900">+10,000 học viên đang chinh phục tiếng Hàn mỗi ngày</p>
+</div>
+<div class="flex flex-wrap justify-center items-center gap-12 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+<div class="flex items-center gap-2 font-bold text-xl text-slate-800"><span class="w-8 h-8 bg-slate-200 rounded-md"></span> SAMSUNG</div>
+<div class="flex items-center gap-2 font-bold text-xl text-slate-800"><span class="w-8 h-8 bg-slate-200 rounded-md"></span> LG GLOBAL</div>
+<div class="flex items-center gap-2 font-bold text-xl text-slate-800"><span class="w-8 h-8 bg-slate-200 rounded-md"></span> HYUNDAI</div>
+<div class="flex items-center gap-2 font-bold text-xl text-slate-800"><span class="w-8 h-8 bg-slate-200 rounded-md"></span> NAVER</div>
+<div class="flex items-center gap-2 font-bold text-xl text-slate-800"><span class="w-8 h-8 bg-slate-200 rounded-md"></span> CJ ENM</div>
+</div>
+</section>
+<div class="bg-slate-900 rounded-[2.5rem] p-10 md:p-16 flex flex-col md:flex-row items-center justify-between gap-10 relative overflow-hidden shadow-2xl">
+<div class="absolute top-0 right-0 w-96 h-96 bg-blue-600/20 blur-[100px] rounded-full translate-x-1/2 -translate-y-1/2"></div>
+<div class="relative z-10">
+<h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Sẵn sàng bứt phá ngay hôm nay?</h2>
+<p class="text-slate-400 text-lg">Trải nghiệm lộ trình học thông minh hoàn toàn miễn phí.</p>
+</div>
+<button class="relative z-10 bg-white text-slate-900 px-8 py-4 rounded-2xl text-lg font-bold hover:bg-blue-50 transition-colors shadow-lg">
+            Bắt đầu học ngay →
+        </button>
+</div>
+</main>
+<footer class="py-12 border-t border-slate-200 text-center">
+<p class="text-sm text-slate-400">© 2024 Nền tảng học Tiếng Hàn Toàn diện. All rights reserved.</p>
+</footer>
+<script>
+const skills = [
+    {id: "nghe", name: "Nghe", icon: "🎧", sub: "Listening", pct: 72, color: "#3B82F6"},
+    {id: "noi", name: "Nói", icon: "🗣", sub: "Speaking", pct: 55, color: "#10B981"},
+    {id: "doc", name: "Đọc", icon: "📖", sub: "Reading", pct: 68, color: "#6366F1"},
+    {id: "viet", name: "Viết", icon: "✍", sub: "Writing", pct: 40, color: "#F59E0B"},
+    {id: "tuvung", name: "Từ vựng", icon: "🧠", sub: "Vocabulary", pct: 85, color: "#EC4899"},
+    {id: "nguphap", name: "Ngữ pháp", icon: "🧩", sub: "Grammar", pct: 60, color: "#8B5CF6"},
+];
+
+const grid = document.getElementById("grid");
+
+skills.forEach(s => {
+    const card = document.createElement("div");
+    card.className = "glass-card rounded-2xl p-6 relative group";
+    card.innerHTML = `
+        <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 rounded-xl bg-white shadow-sm flex items-center justify-center text-2xl border border-slate-100 group-hover:scale-110 transition-transform">
+                ${s.icon}
+            </div>
+            <div class="text-right">
+                <div class="text-sm font-bold text-slate-900">${s.name}</div>
+                <div class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">${s.sub}</div>
+            </div>
+        </div>
+        <div class="flex items-end justify-between mb-2">
+            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Tiến độ</span>
+            <span class="text-xs font-bold text-slate-900">${s.pct}%</span>
+        </div>
+        <div class="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden">
+            <div class="bar-fill h-full rounded-full transition-all duration-1000 ease-out" 
+                 data-pct="${s.pct}" 
+                 style="width: 0%; background-color: ${s.color}; box-shadow: 0 0 12px ${s.color}40">
+            </div>
+        </div>
+    `;
+    grid.appendChild(card);
+});
+
+// Trigger bar animation
+setTimeout(() => {
+    document.querySelectorAll(".bar-fill").forEach(el => {
+        el.style.width = el.dataset.pct + "%";
+    });
+}, 300);
+
+// Interaction logic
+const toggle = document.getElementById("proToggle");
+const toggleTxt = document.getElementById("toggleTxt");
+const annotations = [
+    document.getElementById('anno-nghe'),
+    document.getElementById('anno-noi'),
+    document.getElementById('anno-doc'),
+    document.getElementById('anno-viet'),
+    document.getElementById('anno-tuvung'),
+    document.getElementById('anno-nguphap')
+];
+
+toggle.addEventListener("change", function() {
+    const on = this.checked;
+    toggleTxt.style.color = on ? "var(--accent-primary)" : "var(--ink-light)";
+    
+    annotations.forEach((anno, index) => {
+        if (on) {
+            setTimeout(() => anno.classList.add('visible'), index * 50);
+        } else {
+            anno.classList.remove('visible');
+        }
+    });
+});
+</script>
+</body></html>
