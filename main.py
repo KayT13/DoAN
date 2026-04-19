@@ -6,6 +6,14 @@ from pydantic import BaseModel
 import bcrypt 
 from sqlalchemy import Column, Integer, String, NVARCHAR, Boolean, DateTime
 import datetime
+import jwt
+from datetime import datetime, timedelta, timezone
+from pydantic import BaseModel
+
+# --- KHUÔN MẪU DỮ LIỆU ĐĂNG NHẬP ---
+class UserLogin(BaseModel):
+    tenDangNhap: str
+    matKhau: str
 
 
 def get_password_hash(password: str) -> str:
@@ -22,6 +30,32 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+from fastapi.middleware.cors import CORSMiddleware
+
+app = FastAPI()
+# --- CẤU HÌNH JWT (JSON WEB TOKEN) ---
+SECRET_KEY = "Hệ_Thống_Elearning_Của_Tôi_Mật_Khẩu_Siêu_Cấp_Vũ_Trụ" # Chìa khóa bí mật để in Token
+ALGORITHM = "HS256" # Thuật toán mã hóa
+ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 # Token có hạn trong 24 giờ (1 ngày)
+
+def create_access_token(data: dict):
+    to_encode = data.copy()
+    # Tính toán thời gian hết hạn
+    expire = datetime.now(timezone.utc) + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    to_encode.update({"exp": expire})
+    # Ký và tạo ra chuỗi Token
+    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    return encoded_jwt
+
+# --- THÊM ĐOẠN NÀY ĐỂ CHO PHÉP REACTJS GỌI API ---
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], # Cấp quyền cho mọi Frontend (chạy cổng nào cũng được)
+    allow_credentials=True,
+    allow_methods=["*"], # Cho phép mọi phương thức GET, POST, PUT, DELETE
+    allow_headers=["*"],
+)
+# ------------------------------------------------
 
 class TienDoHoc(Base):
     __tablename__ = "TienDoHoc"
@@ -97,20 +131,26 @@ class NguoiDungDangNhap(BaseModel):
     matKhau: str
 
 @app.post("/api/users/login")
-def login_user(user: NguoiDungDangNhap, db: Session = Depends(get_db)):
-    db_user = db.query(NguoiDung).filter(NguoiDung.tenDangNhap == user.tenDangNhap).first()
+def login(user: UserLogin, db: Session = Depends(get_db)):
+    # 1. Tìm user trong DB
+    db_user = db.query(User).filter(User.TenDangNhap == user.tenDangNhap).first()
     
-    if not db_user or not verify_password(user.matKhau, db_user.matKhau):
+    # 2. Kiểm tra tài khoản và mật khẩu
+    if not db_user or not bcrypt.checkpw(user.matKhau.encode('utf-8'), db_user.MatKhau.encode('utf-8')):
         return {"status": "error", "message": "Tài khoản hoặc mật khẩu không chính xác!"}
     
+    # 3. TẠO VÒNG TAY VIP (JWT TOKEN) NẾU ĐÚNG MẬT KHẨU
+    access_token = create_access_token(data={"sub": db_user.TenDangNhap})
+    
+    # 4. Trả về thông tin user kèm theo cái Token đó
     return {
         "status": "success", 
-        "message": "Đăng nhập thành công!", 
         "data": {
-            "maNguoiDung": db_user.maNguoiDung,
-            "hoTen": db_user.hoTen,
-            "email": db_user.email
-        }
+            "hoTen": db_user.HoTen,
+            "email": db_user.Email,
+            "tenDangNhap": db_user.TenDangNhap
+        },
+        "token": access_token # <--- Trả thêm Token về cho React
     }
 
 @app.post("/api/progress/complete")
