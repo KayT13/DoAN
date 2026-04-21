@@ -147,7 +147,6 @@ def get_lessons_by_course(course_id: int, db: Session = Depends(get_db)):
 
 @app.post("/api/users/register")
 def register_user(user: NguoiDungDangKy, db: Session = Depends(get_db)):
-    # Kiểm tra trùng lặp
     db_user = db.query(NguoiDung).filter(NguoiDung.tenDangNhap == user.tenDangNhap).first()
     if db_user:
         return {"status": "error", "message": "Tên đăng nhập đã tồn tại!"}

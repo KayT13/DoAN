@@ -92,3 +92,8 @@
             FOREIGN KEY (maNguoiDung) REFERENCES NguoiDung(maNguoiDung) ON DELETE CASCADE,
             FOREIGN KEY (maBaiHoc) REFERENCES BaiHoc(maBaiHoc) ON DELETE CASCADE
         );
+
+
+
+ npm run dev
+uvicorn main:app --reload
