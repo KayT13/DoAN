@@ -4,6 +4,9 @@ from fastapi.middleware.cors import CORSMiddleware
 # Import các thành phần nội bộ
 from database import engine, Base
 from routers import courses, users, progress
+from routers import student
+
+app.include_router(student.router)
 
 # Tạo các bảng trong CSDL nếu chưa có (nên dùng Alembic cho dự án thực tế)
 Base.metadata.create_all(bind=engine)
